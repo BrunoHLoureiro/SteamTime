@@ -24,7 +24,7 @@ if (isset($_GET['login'])){
 			$openid->identity = 'https://steamcommunity.com/openid';
 			header('Location: ' . $openid->authUrl());
 		} elseif ($openid->mode == 'cancel') {
-			echo 'User has canceled authentication!';
+			echo 'O usuário cancelou o Login!';
 		} else {
 			if($openid->validate()) { 
 				$id = $openid->identity;
@@ -33,7 +33,7 @@ if (isset($_GET['login'])){
 				
 				$_SESSION['steamid'] = $matches[1];
 				if (!headers_sent()) {
-					header('Location: '.$steamauth['loginpage']);
+					header('Location: restrita.php');
 					exit;
 				} else {
 					?>
@@ -47,7 +47,7 @@ if (isset($_GET['login'])){
 					exit;
 				}
 			} else {
-				echo "User is not logged in.\n";
+				echo "Usuário não está logado\n";
 			}
 		}
 	} catch(ErrorException $e) {
@@ -59,7 +59,7 @@ if (isset($_GET['logout'])){
 	require 'SteamConfig.php';
 	session_unset();
 	session_destroy();
-	header('Location: '.$steamauth['logoutpage']);
+	header('Location: index.php');
 	exit;
 }
 

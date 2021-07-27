@@ -17,37 +17,10 @@ $curl = curl_init();
 <?php
     if(!isset($_SESSION['steamid'])) {
 
-        echo "welcome guest! please login \n \n";
-        loginbutton(); //login button
+        echo "Bem vindo! Por favor entre em sua conta! \n \n";
+        loginbutton();
     
-    }  else {
-        include ('steamauth/userInfo.php');
-    
-        //Protected content
-        echo "Welcome back " . $steamprofile['personaname'] . "</br>";
-        echo "here is your avatar: </br>" . '<img src="'.$steamprofile['avatarfull'].'" title="" alt="" />'; // Display their avatar!
-        
-        
-        
-
-        // set our url with curl_setopt()
-        
-        curl_setopt($curl, CURLOPT_URL, "http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?appid=440&key=116E3328E9DBE297AE7B0CFC27C8B5E0&steamid=".$steamprofile['steamid']);
-        curl_setopt($curl,CURLOPT_RETURNTRANSFER,1);
-
-
-        $jsonout=json_decode(curl_exec($curl),true);
-        var_dump( $jsonout['response']['games']);
-
-        
-        
-
-
-
-
-        curl_close($curl);
-        logoutbutton();
-    }    
+    }  
 ?>
 
 
