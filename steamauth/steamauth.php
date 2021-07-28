@@ -1,6 +1,7 @@
 <?php
 ob_start();
 session_start();
+include_once('conexao.php');
 
 function logoutbutton() {
 	echo "<form action='' method='get'><button name='logout' type='submit'>Logout</button></form>"; //logout button
@@ -33,8 +34,30 @@ if (isset($_GET['login'])){
 				
 				$_SESSION['steamid'] = $matches[1];
 				if (!headers_sent()) {
-					header('Location: restrita.php');
-					exit;
+					$resultado="SELECT steamid FROM users";
+					$resultadoquery=mysqli_query($conn, $resultado);
+					$array=array();
+					while(($row=mysqli_fetch_assoc($resultadoquery))){
+						array_push($array, [
+							"steamid" => $row['steamid'],
+						]);
+					}
+				
+					$tem=false;
+					foreach ($array as $key => $value) {
+						if($array[$key]==$_SESSION['steamid']){
+							$tem=true;
+							header('Location: restrita.php');
+							exit;
+						}
+					}
+					if(!$tem){
+						$add="INSERT INTO users(`steamid`,`horas`) VALUES ({$_SESSION['steamid']},0);";
+						$addquery=mysqli_query($conn,$add);
+						header('Location: restrita.php');
+						exit;
+					}
+			
 				} else {
 					?>
 					<script type="text/javascript">
@@ -46,14 +69,21 @@ if (isset($_GET['login'])){
 					<?php
 					exit;
 				}
+			
+				
 			} else {
 				echo "Usuário não está logado\n";
+				logoutbutton();
+
 			}
 		}
+	
 	} catch(ErrorException $e) {
 		echo $e->getMessage();
-	}
+	
+    }
 }
+
 
 if (isset($_GET['logout'])){
 	require 'SteamConfig.php';
