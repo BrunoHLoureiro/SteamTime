@@ -1,10 +1,21 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="style.css" />
+	<title>Document</title>
+</head>
+<body>
+	
 <?php
 ob_start();
 session_start();
 include_once('conexao.php');
 
 function logoutbutton() {
-	echo "<form action='' method='get'><button name='logout' type='submit'>Logout</button></form>"; //logout button
+	echo "<form  class='form' action='' method='get'><button class='logout' name='logout' type='submit'>Logout</button></form>"; //logout button
 }
 
 function loginbutton($buttonstyle = "square") {
@@ -100,6 +111,8 @@ if (isset($_GET['update'])){
 	exit;
 }
 
-// Version 4.0
 
-?>
+?>	
+</body>
+</html>
+
